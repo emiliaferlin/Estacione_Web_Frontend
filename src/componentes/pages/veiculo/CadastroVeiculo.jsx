@@ -1,43 +1,43 @@
-import { useState, useEffect } from 'react';
-import VeiculoContext from './VeiculoContext';
-import Tabela from './TabelaVeiculo';
+import { useEffect, useState } from "react";
 import {
-    getVeiculoAPI, getVeiculoPorCodigoAPI,
-    deleteVeiculoPorCodigoAPI, cadastraVeiculoAPI
-} from '../../../service/VeiculoService';
+  deleteVeiculoPorCodigoAPI,
+  getVeiculoAPI,
+} from "../../../service/VeiculoService";
+import Tabela from "./TabelaVeiculo";
+import VeiculoContext from "./VeiculoContext";
 
 function CadastroVeiculo() {
+  const [alerta, setAlerta] = useState({ status: "", message: "" });
+  const [listaObjetos, setListaObjetos] = useState([]);
 
-    const [alerta, setAlerta] = useState({ status: "", message: "" });
-    const [listaObjetos, setListaObjetos] = useState([]);
+  const recuperaVeiculo = async () => {
+    setListaObjetos(await getVeiculoAPI());
+  };
 
-    const recuperaVeiculo = async () => {
-        setListaObjetos(await getVeiculoAPI());
+  const remover = async (codigo) => {
+    if (window.confirm("Deseja remover este objeto?")) {
+      let retornoAPI = await deleteVeiculoPorCodigoAPI(codigo);
+      setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
+      recuperaVeiculo();
     }
+  };
 
-    const remover = async codigo => {
-        if (window.confirm('Deseja remover este objeto?')) {
-            let retornoAPI = await deleteVeiculoPorCodigoAPI(codigo);
-            setAlerta({ status: retornoAPI.status, message: retornoAPI.message })
-            recuperaVeiculo();
-        }
-    }
+  useEffect(() => {
+    recuperaVeiculo();
+  }, []);
 
-    useEffect(() => {
-        recuperaVeiculo();
-    }, []);
-
-    return (
-		<VeiculoContext.Provider value={
-            {
-                alerta, setAlerta,
-                listaObjetos,
-                remover
-            }
-        }>
-            <Tabela/>
-        </VeiculoContext.Provider>
-   )
+  return (
+    <VeiculoContext.Provider
+      value={{
+        alerta,
+        setAlerta,
+        listaObjetos,
+        remover,
+      }}
+    >
+      <Tabela />
+    </VeiculoContext.Provider>
+  );
 }
 
 export default CadastroVeiculo;
