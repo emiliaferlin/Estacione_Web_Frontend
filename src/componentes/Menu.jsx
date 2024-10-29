@@ -18,7 +18,7 @@ function Menu() {
                                 <NavLink className="dropdown-item" exact="true" to="veiculo">Cadastro Veículo</NavLink>
                             </NavDropdown>
                             <NavLink className="nav-link active" aria-current="page" exact="true" to="/historicoEstacionamento">Histórico Estacionamento</NavLink>
-                            <NavLink className="nav-link active" aria-current="page" exact="true" to="/login">Sair</NavLink>
+                            <NavLink className="nav-link active" aria-current="page" exact="true" to="/logout">Sair</NavLink>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

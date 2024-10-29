@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css'
-import '@popperjs/core/dist/cjs/popper.js'
-import 'bootstrap/dist/js/bootstrap.min.js'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@popperjs/core/dist/cjs/popper.js";
+import "bootstrap/dist/js/bootstrap.min.js";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import AppContext from "./componentes/AppContext";
 import Home from "./componentes/pages/Home";
 import Menu from "./componentes/Menu";
@@ -31,7 +31,7 @@ function App() {
         {
           path: "/vaga",
           element: <CadastroVaga />,
-        }, 
+        },
         {
           path: "/veiculo",
           element: <CadastroVeiculo />,
@@ -43,10 +43,9 @@ function App() {
         {
           path: "/logout",
           element: <Login />,
-        },      
-      ]
-    }
-  
+        },
+      ],
+    },
   ]);
 
   return (

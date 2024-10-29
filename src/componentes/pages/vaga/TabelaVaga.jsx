@@ -39,7 +39,7 @@ function Tabela() {
                 <td align="center">
                   <Button
                     variant="info"
-                    onClick={() => editarObjeto(objeto.codigo)}
+                    onClick={() => editarObjeto(objeto.id)}
                   >
                     <i className="bi bi-pencil-square"></i>
                   </Button>

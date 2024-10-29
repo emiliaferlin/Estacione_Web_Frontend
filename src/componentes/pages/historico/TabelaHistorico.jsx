@@ -5,13 +5,14 @@ import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 
 function Tabela() {
-  const { alerta, listaObjetos, remover } = useContext(HistoricoContext);
+  const { alerta, listaObjetos, remover, novoObjeto, editarObjeto } =
+    useContext(HistoricoContext);
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Histórico</h1>
       <Alerta alerta={alerta} />
-      <Button variant="primary">
+      <Button variant="primary" onClick={() => novoObjeto()}>
         Novo <i className="bi bi-file-earmark-plus"></i>
       </Button>
       {listaObjetos.length === 0 && <h1>Nenhum histórico encontrada</h1>}
@@ -42,7 +43,10 @@ function Tabela() {
                 <td>{objeto.data_entrada}</td>
                 <td>{objeto.data_saida}</td>
                 <td align="center">
-                  <Button variant="info">
+                  <Button
+                    variant="info"
+                    onClick={() => editarObjeto(objeto.id)}
+                  >
                     <i className="bi bi-pencil-square"></i>
                   </Button>
                   <Button
