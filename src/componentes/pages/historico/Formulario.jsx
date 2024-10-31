@@ -1,77 +1,107 @@
-import { useContext } from 'react'
-import Alerta from '../../Alerta';
-import HistoricoContext from './HistoricoContext';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
+import { useContext } from "react";
+import Alerta from "../../widgets/Alerta";
+import HistoricoContext from "./HistoricoContext";
+import Col from "react-bootstrap/Col";
+import CampoEntrada from "../../widgets/CampoEntrada";
+import Dialogo from "../../widgets/Dialogo";
 
 function Formulario() {
+  const {
+    objeto,
+    handleChange,
+    acaoCadastrar,
+    alerta,
+    exibirForm,
+    setExibirForm,
+  } = useContext(HistoricoContext);
 
-    const { objeto, handleChange, acaoCadastrar, alerta, exibirForm, setExibirForm } = useContext(HistoricoContext);
-
-    return (
-        <Modal show={exibirForm} onHide={() => setExibirForm(false)}>
-            <Modal.Header closeButton>
-                <Modal.Title>Histórico Estacionamento</Modal.Title>
-            </Modal.Header>
-            <form id="formulario" onSubmit={acaoCadastrar}>
-                <Modal.Body>
-                    <Container>
-                        <Row>
-                            <Alerta alerta={alerta} />
-                            <Col xs={12} md={12}>
-                                <FloatingLabel controlId="txtCodido" label="Código" className="mb-3">
-                                    <Form.Control type="number" readOnly name="id"
-                                        value={objeto.id}
-                                        onChange={handleChange} />
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <FloatingLabel controlId="txtCodidoVaga" label="Código" className="mb-3">
-                                    <Form.Control type="number" readOnly name="idVaga"
-                                        value={objeto.id_vaga}
-                                        onChange={handleChange} />
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <FloatingLabel controlId="txtCodidoVeiculo" label="Código" className="mb-3">
-                                    <Form.Control type="number" readOnly name="idVeiculo"
-                                        value={objeto.id_veiculo}
-                                        onChange={handleChange} />
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <FloatingLabel controlId="txtDataEntrada" label="Data Entrada" className="mb-3">
-                                    <Form.Control type="text" required name="data_entrada"
-                                        value={objeto.data_entrada}
-                                        onChange={handleChange} placeholder="Informe a Data de Entrada" />
-                                </FloatingLabel>
-                            </Col>
-                            <Col xs={12} md={12}>
-                                <FloatingLabel controlId="txtNumeroVaga" label="Data Saída" className="mb-3">
-                                    <Form.Control type="text" required name="data_saida"
-                                        value={objeto.data_saida}
-                                        onChange={handleChange} placeholder="Informe a Data de Saída" />
-                                </FloatingLabel>
-                            </Col>
-                        </Row>
-                    </Container>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={() => setExibirForm(false)}>
-                        Fechar
-                    </Button>
-                    <Button variant="success" type="submit">
-                        Salvar  <i className="bi bi-save"></i>
-                    </Button>
-                </Modal.Footer>
-            </form>
-        </Modal>
-    )
+  return (
+    <Dialogo
+      id="modalEdicao"
+      titulo="Histórico Estacionamento"
+      idform="formulario"
+      acaoCadastrar={acaoCadastrar}
+      exibirForm={exibirForm}
+      setExibirForm={setExibirForm}
+    >
+      <Alerta alerta={alerta} />
+      <Col xs={12} md={12}>
+        <CampoEntrada
+          value={objeto.id}
+          id="txtId"
+          name="id"
+          label="Código"
+          tipo="number"
+          onchange={handleChange}
+          msgvalido="Código inserido"
+          msginvalido="Informe o Código"
+          requerido={true}
+          readonly={false}
+          maxCaracteres={40}
+        />
+      </Col>
+      <Col xs={12} md={12}>
+        <CampoEntrada
+          value={objeto.id_vaga}
+          id="txtIdVaga"
+          name="id_vaga"
+          label="Código Vaga"
+          tipo="number"
+          onchange={handleChange}
+          msgvalido="Código inserido"
+          msginvalido="Informe o Código da Vaga"
+          requerido={true}
+          readonly={false}
+          maxCaracteres={40}
+        />
+      </Col>
+      <Col xs={12} md={12}>
+        <CampoEntrada
+          value={objeto.id_veiculo}
+          id="txtIdVeiculo"
+          name="id_veiculo"
+          label="Código Veículo"
+          tipo="number"
+          onchange={handleChange}
+          msgvalido="Código inserido"
+          msginvalido="Informe o Código do Veículo"
+          requerido={true}
+          readonly={false}
+          maxCaracteres={40}
+        />
+      </Col>
+      <Col xs={12} md={12}>
+        <CampoEntrada
+          value={objeto.data_entrada}
+          id="txtDataEntrada"
+          name="data_entrada"
+          label="Data Entrada"
+          tipo="text"
+          onchange={handleChange}
+          msgvalido="Data inserida"
+          msginvalido="Informe a Data de Entrada"
+          requerido={true}
+          readonly={false}
+          maxCaracteres={40}
+        />
+      </Col>
+      <Col xs={12} md={12}>
+        <CampoEntrada
+          value={objeto.data_saida}
+          id="txtDataSaida"
+          name="data_saida"
+          label="Data Saída"
+          tipo="text"
+          onchange={handleChange}
+          msgvalido="Data inserida"
+          msginvalido="Informe a Data de Saída"
+          requerido={true}
+          readonly={false}
+          maxCaracteres={40}
+        />
+      </Col>
+    </Dialogo>
+  );
 }
 
 export default Formulario;

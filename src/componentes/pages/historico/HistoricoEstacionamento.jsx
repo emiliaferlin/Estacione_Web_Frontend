@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import HistoricoContext from "./HistoricoContext";
-import Tabela from "./TabelaHistorico";
+import TabelaGenerica from "../../widgets/TabelaGenerica";
+import Formulario from "./Formulario";
 import {
   getHistoricoAPI,
   getHistoricoPorCodigoAPI,
   deleteHistoricoPorCodigoAPI,
   cadastraHistoricoAPI,
 } from "../../../service/HistoricoService";
-import Formulario from "./Formulario";
 
 function CadastroHistorico() {
   const [alerta, setAlerta] = useState({ status: "", message: "" });
@@ -21,6 +21,9 @@ function CadastroHistorico() {
     data_entrada: "",
     data_saida: "",
   });
+
+  const colunas = ["id", "id_vaga", "id_veiculo", "data_entrada", "data_saida"];
+  const colunasDes = ["Código", "Código Vaga", "Código Veículo", "Data de Entrada", "Data de Saída"];
 
   const novoObjeto = () => {
     setEditar(false);
@@ -46,7 +49,7 @@ function CadastroHistorico() {
     e.preventDefault();
     const metodo = editar ? "PUT" : "POST";
     try {
-      let retornoAPI = await getHistoricoAPI(objeto, metodo);
+      let retornoAPI = await cadastraHistoricoAPI(objeto, metodo);
       setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
       setObjeto(retornoAPI.objeto);
       if (!editar) {
@@ -97,7 +100,16 @@ function CadastroHistorico() {
         setExibirForm,
       }}
     >
-      <Tabela />
+      <TabelaGenerica
+        alerta={alerta}
+        colunas={colunas}
+        colunasDes={colunasDes}
+        dados={listaObjetos}
+        onNovo={novoObjeto}
+        onEditar={editarObjeto}
+        onRemover={remover}
+        titulo={"Histórico"}
+      />
       <Formulario/>
     </HistoricoContext.Provider>
   );

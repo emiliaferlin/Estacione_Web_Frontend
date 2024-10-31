@@ -1,25 +1,33 @@
 import { useEffect, useState } from "react";
+import TabelaGenerica from "../../widgets/TabelaGenerica";
+import VeiculoContext from "./VeiculoContext";
+import Formulario from "./Formulario";
 import {
   cadastraVeiculoAPI,
   deleteVeiculoPorCodigoAPI,
   getVeiculoAPI,
   getVeiculoPorCodigoAPI,
 } from "../../../service/VeiculoService";
-import Tabela from "./TabelaVeiculo";
-import VeiculoContext from "./VeiculoContext";
-import Formulario from "./Formulario";
 
 function CadastroVeiculo() {
   const [alerta, setAlerta] = useState({ status: "", message: "" });
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
   const [exibirForm, setExibirForm] = useState(false);
-  const [objeto, setObjeto] = useState({ id: "", placa: "" , modelo: "", cor: "",});
+  const [objeto, setObjeto] = useState({
+    id: "",
+    placa: "",
+    modelo: "",
+    cor: "",
+  });
+
+  const colunas = ["id", "placa", "modelo", "cor"];
+  const colunasDes = ["Código", "Placa", "Modelo", "Cor"];
 
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
-    setObjeto({ id: 0, placa: "" , modelo: "", cor: "",});
+    setObjeto({ id: 0, placa: "", modelo: "", cor: "" });
     setExibirForm(true);
   };
 
@@ -85,8 +93,17 @@ function CadastroVeiculo() {
         setExibirForm,
       }}
     >
-      <Tabela />
-      <Formulario/>
+      <TabelaGenerica
+        alerta={alerta}
+        colunas={colunas}
+        colunasDes={colunasDes}
+        dados={listaObjetos}
+        onNovo={novoObjeto}
+        onEditar={editarObjeto}
+        onRemover={remover}
+        titulo={"Veículo"}
+      />
+      <Formulario />
     </VeiculoContext.Provider>
   );
 }

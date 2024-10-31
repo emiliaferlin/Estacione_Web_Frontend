@@ -7,6 +7,7 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import AppContext from "./componentes/AppContext";
 import Home from "./componentes/pages/Home";
 import Menu from "./componentes/Menu";
+import MenuPublico from "./componentes/MenuLogin";
 import Login from "./componentes/pages/Login";
 import CadastroVaga from "./componentes/pages/vaga/CadastroVaga";
 import CadastroVeiculo from "./componentes/pages/veiculo/CadastroVeiculo";
@@ -42,6 +43,16 @@ function App() {
         },
         {
           path: "/logout",
+          element: <Login />,
+        },
+      ],
+    },
+    {
+      path: "/publico",
+      element: isAuthenticated ? <Menu /> : <MenuPublico />,
+      children: [
+        {
+          index: true,
           element: <Login />,
         },
       ],
