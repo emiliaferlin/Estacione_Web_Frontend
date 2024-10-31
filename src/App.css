@@ -36,3 +36,9 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.app-background {
+  background-color: #f0f0f0; /* Substitua pelo código de cor desejado */
+  min-height: 100vh; /* Garante que a cor cubra toda a altura da tela */
+  padding: 20px;
+}

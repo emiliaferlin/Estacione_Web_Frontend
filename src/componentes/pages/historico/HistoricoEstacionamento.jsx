@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import HistoricoContext from "./HistoricoContext";
 import TabelaGenerica from "../../widgets/TabelaGenerica";
-import Formulario from "./Formulario";
+import FormularioGenerico from "../../widgets/FormularioGenerico";
 import {
   getHistoricoAPI,
   getHistoricoPorCodigoAPI,
@@ -23,7 +23,66 @@ function CadastroHistorico() {
   });
 
   const colunas = ["id", "id_vaga", "id_veiculo", "data_entrada", "data_saida"];
-  const colunasDes = ["Código", "Código Vaga", "Código Veículo", "Data de Entrada", "Data de Saída"];
+  const colunasDes = [
+    "Código",
+    "Código Vaga",
+    "Código Veículo",
+    "Data de Entrada",
+    "Data de Saída",
+  ];
+
+  const campos = [
+    {
+      id: "txtId",
+      name: "id",
+      label: "Código",
+      tipo: "number",
+      value: objeto.id,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtIdVaga",
+      name: "id_vaga",
+      label: "Código Vaga",
+      tipo: "number",
+      value: objeto.id_vaga,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtIdVeiculo",
+      name: "id_veiculo",
+      label: "Código Veículo",
+      tipo: "number",
+      value: objeto.id_veiculo,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtDataEntrada",
+      name: "data_entrada",
+      label: "Data Entrada",
+      tipo: "text",
+      value: objeto.data_entrada,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtDataSaida",
+      name: "data_saida",
+      label: "Data Saída",
+      tipo: "text",
+      value: objeto.data_saida,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
 
   const novoObjeto = () => {
     setEditar(false);
@@ -110,7 +169,15 @@ function CadastroHistorico() {
         onRemover={remover}
         titulo={"Histórico"}
       />
-      <Formulario/>
+      <FormularioGenerico
+        titulo="Histórico Estacionamento"
+        alerta={alerta}
+        campos={campos}
+        handleChange={handleChange}
+        acaoCadastrar={acaoCadastrarVeiculo}
+        exibirForm={exibirForm}
+        setExibirForm={setExibirForm}
+      />
     </HistoricoContext.Provider>
   );
 }

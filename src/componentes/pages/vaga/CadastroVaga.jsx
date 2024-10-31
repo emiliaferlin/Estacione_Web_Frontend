@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import VagaContext from "./VagaContext";
 import TabelaGenerica from "../../widgets/TabelaGenerica";
-import Formulario from "./Formulario";
+import FormularioGenerico from "../../widgets/FormularioGenerico";
 import {
   getVagaAPI,
   getVagaPorCodigoAPI,
@@ -18,6 +18,29 @@ function CadastroVaga() {
 
   const colunas = ["id", "numero_vaga", "ocupada"];
   const colunasDes = ["Código", "Número Vaga", "Disponível"];
+
+  const campos = [
+    {
+      id: "txtId",
+      name: "id",
+      label: "Código",
+      tipo: "number",
+      value: objeto.id,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtVaga",
+      name: "numero_vaga",
+      label: "Número Vaga",
+      tipo: "text",
+      value: objeto.numero_vaga,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
 
   const novoObjeto = () => {
     setEditar(false);
@@ -98,7 +121,15 @@ function CadastroVaga() {
         onRemover={remover}
         titulo={"Vaga"}
       />
-      <Formulario />
+      <FormularioGenerico
+        titulo="Vaga"
+        alerta={alerta}
+        campos={campos}
+        handleChange={handleChange}
+        acaoCadastrar={acaoCadastrarVaga}
+        exibirForm={exibirForm}
+        setExibirForm={setExibirForm}
+      />
     </VagaContext.Provider>
   );
 }

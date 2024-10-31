@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import TabelaGenerica from "../../widgets/TabelaGenerica";
+import FormularioGenerico from "../../widgets/FormularioGenerico";
 import VeiculoContext from "./VeiculoContext";
-import Formulario from "./Formulario";
 import {
   cadastraVeiculoAPI,
   deleteVeiculoPorCodigoAPI,
@@ -23,6 +23,49 @@ function CadastroVeiculo() {
 
   const colunas = ["id", "placa", "modelo", "cor"];
   const colunasDes = ["Código", "Placa", "Modelo", "Cor"];
+
+  const campos = [
+    {
+      id: "txtId",
+      name: "id",
+      label: "Código",
+      tipo: "number",
+      value: objeto.id,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtPlaca",
+      name: "placa",
+      label: "Placa",
+      tipo: "text",
+      value: objeto.placa,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtModelo",
+      name: "modelo",
+      label: "Modelo",
+      tipo: "text",
+      value: objeto.modelo,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtCor",
+      name: "cor",
+      label: "Cor",
+      tipo: "text",
+      value: objeto.cor,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
 
   const novoObjeto = () => {
     setEditar(false);
@@ -103,7 +146,15 @@ function CadastroVeiculo() {
         onRemover={remover}
         titulo={"Veículo"}
       />
-      <Formulario />
+      <FormularioGenerico
+        titulo="Veículo"
+        alerta={alerta}
+        campos={campos}
+        handleChange={handleChange}
+        acaoCadastrar={acaoCadastrarVeiculo}
+        exibirForm={exibirForm}
+        setExibirForm={setExibirForm}
+      />
     </VeiculoContext.Provider>
   );
 }

@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import AppContext from "../AppContext";
-import "../../App.css";
+import AppContext from "../../AppContext";
+import "../../../App.css";
 
 const Login = () => {
   const { nome, setNome, senha, setSenha, setIsAuthenticated } =
@@ -22,6 +22,7 @@ const Login = () => {
   return (
     <div className="login-view">
       <div className="login-container">
+        <h1>Login</h1>
         <div className="dados-container">
           <label>Nome: </label>
           <input
