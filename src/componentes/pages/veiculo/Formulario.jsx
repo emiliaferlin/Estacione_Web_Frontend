@@ -33,8 +33,8 @@ function Formulario() {
           label="Código"
           tipo="number"
           onchange={handleChange}
-          msgvalido="Código inserido"
-          msginvalido="Informe o Código"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -48,8 +48,8 @@ function Formulario() {
           label="Paca"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Placa inserida com sucesso"
-          msginvalido="Informe a placa"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -63,8 +63,8 @@ function Formulario() {
           label="Modelo"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Modelo inserido com sucesso"
-          msginvalido="Informe o modelo"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -78,8 +78,8 @@ function Formulario() {
           label="Cor"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Cor inserida com sucesso"
-          msginvalido="Informe a cor"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}

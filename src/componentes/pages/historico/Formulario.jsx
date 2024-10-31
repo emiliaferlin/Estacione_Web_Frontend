@@ -33,8 +33,8 @@ function Formulario() {
           label="Código"
           tipo="number"
           onchange={handleChange}
-          msgvalido="Código inserido"
-          msginvalido="Informe o Código"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -48,8 +48,8 @@ function Formulario() {
           label="Código Vaga"
           tipo="number"
           onchange={handleChange}
-          msgvalido="Código inserido"
-          msginvalido="Informe o Código da Vaga"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -63,8 +63,8 @@ function Formulario() {
           label="Código Veículo"
           tipo="number"
           onchange={handleChange}
-          msgvalido="Código inserido"
-          msginvalido="Informe o Código do Veículo"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -78,8 +78,8 @@ function Formulario() {
           label="Data Entrada"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Data inserida"
-          msginvalido="Informe a Data de Entrada"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -93,8 +93,8 @@ function Formulario() {
           label="Data Saída"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Data inserida"
-          msginvalido="Informe a Data de Saída"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}

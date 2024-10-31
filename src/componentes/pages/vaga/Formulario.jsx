@@ -33,8 +33,8 @@ function Formulario() {
           label="Código"
           tipo="number"
           onchange={handleChange}
-          msgvalido="Código inserido"
-          msginvalido="Informe o Código"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
@@ -48,8 +48,8 @@ function Formulario() {
           label="Número Vaga"
           tipo="text"
           onchange={handleChange}
-          msgvalido="Número da Vaga inserida"
-          msginvalido="Informe o número da Vaga"
+          msgvalido="Dado inserido com sucesso"
+          msginvalido="Campo obrigatório"
           requerido={true}
           readonly={false}
           maxCaracteres={40}
