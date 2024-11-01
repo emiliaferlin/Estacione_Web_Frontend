@@ -31,7 +31,7 @@ function CadastroVeiculo() {
       label: "Código",
       tipo: "number",
       value: objeto.id,
-      requerido: true,
+      requerido: false,
       readonly: false,
       maxCaracteres: 40,
     },
@@ -95,6 +95,7 @@ function CadastroVeiculo() {
       console.log(e);
     }
 
+    setExibirForm(false);
     recuperaVeiculo();
   };
 

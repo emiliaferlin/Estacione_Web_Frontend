@@ -14,7 +14,7 @@ function CadastroVaga() {
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
   const [exibirForm, setExibirForm] = useState(false);
-  const [objeto, setObjeto] = useState({ id: "", numero_vaga: "" });
+  const [objeto, setObjeto] = useState({ id: "", numero_vaga: "", ocupada: ""});
 
   const colunas = ["id", "numero_vaga", "ocupada"];
   const colunasDes = ["Código", "Número Vaga", "Disponível"];
@@ -26,7 +26,7 @@ function CadastroVaga() {
       label: "Código",
       tipo: "number",
       value: objeto.id,
-      requerido: true,
+      requerido: false,
       readonly: false,
       maxCaracteres: 40,
     },
@@ -40,12 +40,22 @@ function CadastroVaga() {
       readonly: false,
       maxCaracteres: 40,
     },
+    {
+      id: "txtOcupada",
+      name: "ocupada",
+      label: "Disponibilidade da Vaga",
+      tipo: "number",
+      value: objeto.ocupada,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
   ];
 
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
-    setObjeto({ id: 0, numero_vaga: "" });
+    setObjeto({ id: 0, numero_vaga: "" , ocupada: 0});
     setExibirForm(true);
   };
 
@@ -70,6 +80,7 @@ function CadastroVaga() {
       console.log(e);
     }
 
+    setExibirForm(false);
     recuperaVaga();
   };
 

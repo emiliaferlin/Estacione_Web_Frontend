@@ -16,17 +16,17 @@ function CadastroHistorico() {
   const [exibirForm, setExibirForm] = useState(false);
   const [objeto, setObjeto] = useState({
     id: 0,
-    id_vaga: 0,
     id_veiculo: 0,
+    id_vaga: 0,
     data_entrada: "",
     data_saida: "",
   });
 
-  const colunas = ["id", "id_vaga", "id_veiculo", "data_entrada", "data_saida"];
+  const colunas = ["id", "id_veiculo", "id_vaga", "data_entrada", "data_saida"];
   const colunasDes = [
     "Código",
-    "Código Vaga",
     "Código Veículo",
+    "Código Vaga",
     "Data de Entrada",
     "Data de Saída",
   ];
@@ -38,6 +38,16 @@ function CadastroHistorico() {
       label: "Código",
       tipo: "number",
       value: objeto.id,
+      requerido: false,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtIdVeiculo",
+      name: "id_veiculo",
+      label: "Código Veículo",
+      tipo: "number",
+      value: objeto.id_veiculo,
       requerido: true,
       readonly: false,
       maxCaracteres: 40,
@@ -48,16 +58,6 @@ function CadastroHistorico() {
       label: "Código Vaga",
       tipo: "number",
       value: objeto.id_vaga,
-      requerido: true,
-      readonly: false,
-      maxCaracteres: 40,
-    },
-    {
-      id: "txtIdVeiculo",
-      name: "id_veiculo",
-      label: "Código Veículo",
-      tipo: "number",
-      value: objeto.id_veiculo,
       requerido: true,
       readonly: false,
       maxCaracteres: 40,
@@ -89,8 +89,8 @@ function CadastroHistorico() {
     setAlerta({ status: "", message: "" });
     setObjeto({
       id: 0,
-      id_vaga: 0,
       id_veiculo: 0,
+      id_vaga: 0,
       data_entrada: "",
       data_saida: "",
     });
@@ -104,7 +104,7 @@ function CadastroHistorico() {
     setExibirForm(true);
   };
 
-  const acaoCadastrarVeiculo = async (e) => {
+  const acaoCadastrarHistorico = async (e) => {
     e.preventDefault();
     const metodo = editar ? "PUT" : "POST";
     try {
@@ -117,7 +117,7 @@ function CadastroHistorico() {
     } catch (e) {
       console.log(e);
     }
-
+    setExibirForm(false);
     recuperaHistorico();
   };
 
@@ -153,7 +153,7 @@ function CadastroHistorico() {
         objeto,
         editarObjeto,
         novoObjeto,
-        acaoCadastrarVeiculo,
+        acaoCadastrarHistorico,
         handleChange,
         exibirForm,
         setExibirForm,
@@ -174,7 +174,7 @@ function CadastroHistorico() {
         alerta={alerta}
         campos={campos}
         handleChange={handleChange}
-        acaoCadastrar={acaoCadastrarVeiculo}
+        acaoCadastrar={acaoCadastrarHistorico}
         exibirForm={exibirForm}
         setExibirForm={setExibirForm}
       />
