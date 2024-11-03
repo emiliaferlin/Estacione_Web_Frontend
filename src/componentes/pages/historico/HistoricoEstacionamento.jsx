@@ -84,6 +84,49 @@ function CadastroHistorico() {
     },
   ];
 
+  const camposEdicao = [
+    {
+      id: "txtIdVeiculo",
+      name: "id_veiculo",
+      label: "Código Veículo",
+      tipo: "number",
+      value: objeto.id_veiculo,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtIdVaga",
+      name: "id_vaga",
+      label: "Código Vaga",
+      tipo: "number",
+      value: objeto.id_vaga,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtDataEntrada",
+      name: "data_entrada",
+      label: "Data Entrada",
+      tipo: "text",
+      value: objeto.data_entrada,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtDataSaida",
+      name: "data_saida",
+      label: "Data Saída",
+      tipo: "text",
+      value: objeto.data_saida,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
+
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
@@ -172,7 +215,7 @@ function CadastroHistorico() {
       <FormularioGenerico
         titulo="Histórico Estacionamento"
         alerta={alerta}
-        campos={campos}
+        campos={!editar ? campos : camposEdicao}
         handleChange={handleChange}
         acaoCadastrar={acaoCadastrarHistorico}
         exibirForm={exibirForm}

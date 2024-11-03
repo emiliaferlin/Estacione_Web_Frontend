@@ -14,7 +14,11 @@ function CadastroVaga() {
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
   const [exibirForm, setExibirForm] = useState(false);
-  const [objeto, setObjeto] = useState({ id: "", numero_vaga: "", ocupada: ""});
+  const [objeto, setObjeto] = useState({
+    id: "",
+    numero_vaga: "",
+    ocupada: "",
+  });
 
   const colunas = ["id", "numero_vaga", "ocupada"];
   const colunasDes = ["Código", "Número Vaga", "Disponível"];
@@ -52,10 +56,33 @@ function CadastroVaga() {
     },
   ];
 
+  const camposEdicao = [
+    {
+      id: "txtVaga",
+      name: "numero_vaga",
+      label: "Número Vaga",
+      tipo: "text",
+      value: objeto.numero_vaga,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtOcupada",
+      name: "ocupada",
+      label: "Disponibilidade da Vaga",
+      tipo: "number",
+      value: objeto.ocupada,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
+
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
-    setObjeto({ id: 0, numero_vaga: "" , ocupada: 0});
+    setObjeto({ id: 0, numero_vaga: "", ocupada: 0 });
     setExibirForm(true);
   };
 
@@ -135,7 +162,7 @@ function CadastroVaga() {
       <FormularioGenerico
         titulo="Vaga"
         alerta={alerta}
-        campos={campos}
+        campos={!editar ? campos : camposEdicao}
         handleChange={handleChange}
         acaoCadastrar={acaoCadastrarVaga}
         exibirForm={exibirForm}

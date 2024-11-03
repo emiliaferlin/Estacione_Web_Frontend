@@ -67,6 +67,39 @@ function CadastroVeiculo() {
     },
   ];
 
+  const camposEdicao = [
+    {
+      id: "txtPlaca",
+      name: "placa",
+      label: "Placa",
+      tipo: "text",
+      value: objeto.placa,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtModelo",
+      name: "modelo",
+      label: "Modelo",
+      tipo: "text",
+      value: objeto.modelo,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+    {
+      id: "txtCor",
+      name: "cor",
+      label: "Cor",
+      tipo: "text",
+      value: objeto.cor,
+      requerido: true,
+      readonly: false,
+      maxCaracteres: 40,
+    },
+  ];
+
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
@@ -150,7 +183,7 @@ function CadastroVeiculo() {
       <FormularioGenerico
         titulo="Veículo"
         alerta={alerta}
-        campos={campos}
+        campos={!editar ? campos : camposEdicao}
         handleChange={handleChange}
         acaoCadastrar={acaoCadastrarVeiculo}
         exibirForm={exibirForm}
