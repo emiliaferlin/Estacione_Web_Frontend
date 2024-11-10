@@ -15,7 +15,6 @@ function CadastroVaga() {
   const [editar, setEditar] = useState(false);
   const [exibirForm, setExibirForm] = useState(false);
   const [objeto, setObjeto] = useState({
-    id: "",
     numero_vaga: "",
     ocupada: "",
   });
@@ -24,39 +23,6 @@ function CadastroVaga() {
   const colunasDes = ["Código", "Número Vaga", "Disponível"];
 
   const campos = [
-    {
-      id: "txtId",
-      name: "id",
-      label: "Código",
-      tipo: "number",
-      value: objeto.id,
-      requerido: false,
-      readonly: false,
-      maxCaracteres: 40,
-    },
-    {
-      id: "txtVaga",
-      name: "numero_vaga",
-      label: "Número Vaga",
-      tipo: "text",
-      value: objeto.numero_vaga,
-      requerido: true,
-      readonly: false,
-      maxCaracteres: 40,
-    },
-    {
-      id: "txtOcupada",
-      name: "ocupada",
-      label: "Disponibilidade da Vaga",
-      tipo: "number",
-      value: objeto.ocupada,
-      requerido: true,
-      readonly: false,
-      maxCaracteres: 40,
-    },
-  ];
-
-  const camposEdicao = [
     {
       id: "txtVaga",
       name: "numero_vaga",
@@ -82,7 +48,7 @@ function CadastroVaga() {
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
-    setObjeto({ id: 0, numero_vaga: "", ocupada: 0 });
+    setObjeto({numero_vaga: "", ocupada: 0 });
     setExibirForm(true);
   };
 
@@ -122,7 +88,7 @@ function CadastroVaga() {
   };
 
   const remover = async (id) => {
-    if (window.confirm("Deseja remover este objeto?")) {
+    if (window.confirm("Deseja remover esta Vaga?")) {
       let retornoAPI = await deleteVagaPorCodigoAPI(id);
       setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
       recuperaVaga();
@@ -162,7 +128,7 @@ function CadastroVaga() {
       <FormularioGenerico
         titulo="Vaga"
         alerta={alerta}
-        campos={!editar ? campos : camposEdicao}
+        campos={campos}
         handleChange={handleChange}
         acaoCadastrar={acaoCadastrarVaga}
         exibirForm={exibirForm}
