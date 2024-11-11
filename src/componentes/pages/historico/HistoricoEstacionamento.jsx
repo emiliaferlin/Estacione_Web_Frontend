@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
 import HistoricoContext from "./HistoricoContext";
 import TabelaGenerica from "../../widgets/TabelaGenerica";
-import FormularioGenerico from "../../widgets/FormularioGenerico";
+import Formulario from "./Formulario";
 import {
   getHistoricoAPI,
   getHistoricoPorCodigoAPI,
   deleteHistoricoPorCodigoAPI,
   cadastraHistoricoAPI,
 } from "../../../service/HistoricoService";
+import { getVeiculoAPI } from "../../../service/VeiculoService";
+import { getVagaAPI } from "../../../service/VagaService";
 
 function CadastroHistorico() {
   const [alerta, setAlerta] = useState({ status: "", message: "" });
@@ -20,37 +22,27 @@ function CadastroHistorico() {
     data_entrada: "",
     data_saida: "",
   });
+  const [listaVaga, setListaVaga] = useState([]);
+  const [listaVeiculo, setVeiculo] = useState([]);
 
-  const colunas = ["id", "id_veiculo", "id_vaga", "data_entrada", "data_saida"];
+  const recuperaVaga = async () => {
+    setListaVaga(await getVagaAPI());
+  };
+
+  const recuperaVeiculo = async () => {
+    setVeiculo(await getVeiculoAPI());
+  };
+
+  const colunas = ["id", "placa", "numero_vaga", "data_entrada", "data_saida"];
   const colunasDes = [
     "Código",
-    "Código Veículo",
-    "Código Vaga",
+    "Placa do Veículo",
+    "Número da Vaga",
     "Data de Entrada",
     "Data de Saída",
   ];
-
+  
   const campos = [
-    {
-      id: "txtIdVeiculo",
-      name: "id_veiculo",
-      label: "Código Veículo",
-      tipo: "number",
-      value: objeto.id_veiculo,
-      requerido: true,
-      readonly: false,
-      maxCaracteres: 40,
-    },
-    {
-      id: "txtIdVaga",
-      name: "id_vaga",
-      label: "Código Vaga",
-      tipo: "number",
-      value: objeto.id_vaga,
-      requerido: true,
-      readonly: false,
-      maxCaracteres: 40,
-    },
     {
       id: "txtDataEntrada",
       name: "data_entrada",
@@ -72,7 +64,6 @@ function CadastroHistorico() {
       maxCaracteres: 40,
     },
   ];
-
 
   const novoObjeto = () => {
     setEditar(false);
@@ -130,6 +121,8 @@ function CadastroHistorico() {
 
   useEffect(() => {
     recuperaHistorico();
+    recuperaVaga();
+    recuperaVeiculo();
   }, []);
 
   return (
@@ -158,7 +151,7 @@ function CadastroHistorico() {
         onRemover={remover}
         titulo={"Histórico"}
       />
-      <FormularioGenerico
+      <Formulario
         titulo="Histórico Estacionamento"
         alerta={alerta}
         campos={campos}
@@ -166,6 +159,9 @@ function CadastroHistorico() {
         acaoCadastrar={acaoCadastrarHistorico}
         exibirForm={exibirForm}
         setExibirForm={setExibirForm}
+        listaVaga={listaVaga}
+        listaVeiculo={listaVeiculo}
+        objeto={objeto}
       />
     </HistoricoContext.Provider>
   );
