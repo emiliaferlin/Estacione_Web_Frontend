@@ -1,25 +1,22 @@
-import { Container, Navbar } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 import { NavLink, Outlet } from "react-router-dom";
 
-function MenuLogin() {
+function MenuPublico() {
   return (
-    <div>
+    <>
       <Navbar expand="lg" className="bg-body-tertiary">
         <Container>
-          <NavLink
-            className="navbar-brand"
-            aria-current="page"
-            exact="true"
-            to="/publico"
-          >
+          <NavLink className="navbar-brand" exact="true" to="/">
             Estacione
           </NavLink>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
         </Container>
       </Navbar>
       <Outlet />
-    </div>
+    </>
   );
 }
 
-export default MenuLogin;
+export default MenuPublico;

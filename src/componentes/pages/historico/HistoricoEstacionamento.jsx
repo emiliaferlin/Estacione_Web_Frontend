@@ -10,8 +10,11 @@ import {
 } from "../../../service/HistoricoService";
 import { getVeiculoAPI } from "../../../service/VeiculoService";
 import { getVagaAPI } from "../../../service/VagaService";
+import { useNavigate } from "react-router-dom";
+import WithAuth from "../../../seguranca/WithAuth";
 
 function CadastroHistorico() {
+  let navigate = useNavigate();
   const [alerta, setAlerta] = useState({ status: "", message: "" });
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
@@ -26,11 +29,19 @@ function CadastroHistorico() {
   const [listaVeiculo, setVeiculo] = useState([]);
 
   const recuperaVaga = async () => {
-    setListaVaga(await getVagaAPI());
+    try {
+      setListaVaga(await getVagaAPI());
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const recuperaVeiculo = async () => {
-    setVeiculo(await getVeiculoAPI());
+    try {
+      setVeiculo(await getVeiculoAPI());
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const colunas = ["id", "placa", "numero_vaga", "data_entrada", "data_saida"];
@@ -41,7 +52,7 @@ function CadastroHistorico() {
     "Data de Entrada",
     "Data de Saída",
   ];
-  
+
   const campos = [
     {
       id: "txtDataEntrada",
@@ -78,10 +89,14 @@ function CadastroHistorico() {
   };
 
   const editarObjeto = async (id) => {
-    setObjeto(await getHistoricoPorCodigoAPI(id));
-    setEditar(true);
-    setAlerta({ status: "", message: "" });
-    setExibirForm(true);
+    try {
+      setObjeto(await getHistoricoPorCodigoAPI(id));
+      setEditar(true);
+      setAlerta({ status: "", message: "" });
+      setExibirForm(true);
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const acaoCadastrarHistorico = async (e) => {
@@ -95,6 +110,7 @@ function CadastroHistorico() {
         setEditar(true);
       }
     } catch (e) {
+      navigate("/login", { replace: true });
       console.log(e);
     }
     setExibirForm(false);
@@ -108,14 +124,22 @@ function CadastroHistorico() {
   };
 
   const recuperaHistorico = async () => {
-    setListaObjetos(await getHistoricoAPI());
+    try {
+      setListaObjetos(await getHistoricoAPI());
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const remover = async (codigo) => {
-    if (window.confirm("Deseja remover este objeto?")) {
-      let retornoAPI = await deleteHistoricoPorCodigoAPI(codigo);
-      setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
-      recuperaHistorico();
+    try {
+      if (window.confirm("Deseja remover este objeto?")) {
+        let retornoAPI = await deleteHistoricoPorCodigoAPI(codigo);
+        setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
+        recuperaHistorico();
+      }
+    } catch (err) {
+      navigate("/login", { replace: true });
     }
   };
 
@@ -123,6 +147,7 @@ function CadastroHistorico() {
     recuperaHistorico();
     recuperaVaga();
     recuperaVeiculo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -167,4 +192,4 @@ function CadastroHistorico() {
   );
 }
 
-export default CadastroHistorico;
+export default WithAuth(CadastroHistorico);

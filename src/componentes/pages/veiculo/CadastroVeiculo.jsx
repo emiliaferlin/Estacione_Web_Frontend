@@ -8,8 +8,11 @@ import {
   getVeiculoAPI,
   getVeiculoPorCodigoAPI,
 } from "../../../service/VeiculoService";
+import { useNavigate } from "react-router-dom";
+import WithAuth from "../../../seguranca/WithAuth";
 
 function CadastroVeiculo() {
+  let navigate = useNavigate();
   const [alerta, setAlerta] = useState({ status: "", message: "" });
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
@@ -64,10 +67,14 @@ function CadastroVeiculo() {
   };
 
   const editarObjeto = async (id) => {
-    setObjeto(await getVeiculoPorCodigoAPI(id));
-    setEditar(true);
-    setAlerta({ status: "", message: "" });
-    setExibirForm(true);
+    try {
+      setObjeto(await getVeiculoPorCodigoAPI(id));
+      setEditar(true);
+      setAlerta({ status: "", message: "" });
+      setExibirForm(true);
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const acaoCadastrarVeiculo = async (e) => {
@@ -81,6 +88,7 @@ function CadastroVeiculo() {
         setEditar(true);
       }
     } catch (e) {
+      navigate("/login", { replace: true });
       console.log(e);
     }
 
@@ -95,19 +103,28 @@ function CadastroVeiculo() {
   };
 
   const recuperaVeiculo = async () => {
-    setListaObjetos(await getVeiculoAPI());
+    try {
+      setListaObjetos(await getVeiculoAPI());
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const remover = async (codigo) => {
-    if (window.confirm("Deseja remover este Veículo?")) {
-      let retornoAPI = await deleteVeiculoPorCodigoAPI(codigo);
-      setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
-      recuperaVeiculo();
+    try {
+      if (window.confirm("Deseja remover este Veículo?")) {
+        let retornoAPI = await deleteVeiculoPorCodigoAPI(codigo);
+        setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
+        recuperaVeiculo();
+      }
+    } catch (err) {
+      navigate("/login", { replace: true });
     }
   };
 
   useEffect(() => {
     recuperaVeiculo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -149,4 +166,4 @@ function CadastroVeiculo() {
   );
 }
 
-export default CadastroVeiculo;
+export default WithAuth(CadastroVeiculo);

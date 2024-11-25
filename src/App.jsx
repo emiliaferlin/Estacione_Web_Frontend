@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@popperjs/core/dist/cjs/popper.js";
@@ -16,13 +16,10 @@ import HistoricoEstacionamento from "./componentes/pages/historico/HistoricoEsta
 function App() {
   const [nome, setNome] = useState(localStorage.getItem("nome") || "");
   const [senha, setSenha] = useState(localStorage.getItem("senha") || "");
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("nome")
-  );
 
   const router = createBrowserRouter([
     {
-      path: "/",
+      path: "/privado",
       element: <Menu />,
       children: [
         {
@@ -30,29 +27,29 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/vaga",
+          path: "vaga",
           element: <CadastroVaga />,
         },
         {
-          path: "/veiculo",
+          path: "veiculo",
           element: <CadastroVeiculo />,
         },
         {
-          path: "/historicoEstacionamento",
+          path: "historicoEstacionamento",
           element: <HistoricoEstacionamento />,
-        },
-        {
-          path: "/logout",
-          element: <Login />,
         },
       ],
     },
     {
-      path: "/publico",
-      element: isAuthenticated ? <Menu /> : <MenuPublico />,
+      path: "/",
+      element: <MenuPublico />,
       children: [
         {
           index: true,
+          element: <Login />,
+        },
+        {
+          path: "/login",
           element: <Login />,
         },
       ],
@@ -66,8 +63,6 @@ function App() {
         setNome,
         senha,
         setSenha,
-        isAuthenticated,
-        setIsAuthenticated,
       }}
     >
       <div className="app-background">       

@@ -1,52 +1,101 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import AppContext from "../../AppContext";
-import "../../../App.css";
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { gravaAutenticacao, getToken } from "../../../seguranca/Autenticacao";
+import Alerta from "../../widgets/Alerta";
+import CampoEntrada from "../../widgets/CampoEntrada";
 
-const Login = () => {
-  const { nome, setNome, senha, setSenha, setIsAuthenticated } =
-    useContext(AppContext);
-  const navigate = useNavigate();
+function Login() {
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [alerta, setAlerta] = useState({ status: "", message: "" });
+  const [autenticado, setAutenticado] = useState(false);
 
-  const handleLogin = () => {
-    if (nome && senha) {
-      localStorage.setItem("nome", nome);
-      localStorage.setItem("senha", senha);
-      setIsAuthenticated(true);
-      navigate("/");
-    } else {
-      alert("Por favor, preencha todos os campos.");
+  const acaoLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const body = {
+        email: email,
+        senha: senha,
+      };
+      await fetch(`${process.env.REACT_APP_ENDERECO_API}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.auth === false) {
+            setAlerta({ status: "error", message: json.message });
+          }
+          if (json.auth === true) {
+            setAutenticado(true);
+            gravaAutenticacao(json);
+          }
+        });
+    } catch (err) {
+      console.error(err.message);
+      setAlerta({ status: "error", message: err.message });
+    } finally {
     }
   };
+
+  useEffect(() => {
+    try {
+      const token = getToken();
+      if (token != null) {
+        setAutenticado(true);
+      }
+    } catch (err) {
+      setAlerta({ status: "error", message: err != null ? err.message : "" });
+    }
+  }, []);
+
+  if (autenticado === true) {
+    return <Navigate to="/privado" />;
+  }
 
   return (
     <div className="login-view">
       <div className="login-container">
-        <h1>Login</h1>
-        <div className="dados-container">
-          <label>Nome: </label>
-          <input
-            type="text"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-          />
-        </div>
-        <div className="dados-container">
-          <label>Senha: </label>
-          <input
-            type="password"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-          />
-        </div>
-        <div className="dados-container">
-          <button className="todos-button" onClick={handleLogin}>
-            Entrar
-          </button>
+        <div className="col-12 col-md-6">
+          <Alerta alerta={alerta} />
+          <form onSubmit={acaoLogin}>
+            <h1 className="h3 mb-3 fw-normal">Login do usuário</h1>
+            <CampoEntrada
+              value={email}
+              id="txtEmail"
+              name="email"
+              label="E-mail"
+              tipo="email"
+              onchange={(e) => setEmail(e.target.value)}
+              msgvalido="Email OK"
+              msginvalido="Informe o email"
+              requerido={true}
+              readonly={false}
+              maxCaracteres={40}
+            />
+            <CampoEntrada
+              value={senha}
+              id="txtSenha"
+              name="senha"
+              label="Senha"
+              tipo="password"
+              onchange={(e) => setSenha(e.target.value)}
+              msgvalido="Senha OK"
+              msginvalido="Informe a senha"
+              requerido={true}
+              readonly={false}
+              maxCaracteres={40}
+            />
+            <button className="w-100 btn btn-lg btn-primary" type="submit">
+              Entrar
+            </button>
+          </form>
         </div>
       </div>
     </div>
   );
-};
+}
 
 export default Login;

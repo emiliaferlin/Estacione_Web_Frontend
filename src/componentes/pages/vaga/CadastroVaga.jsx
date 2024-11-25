@@ -8,8 +8,11 @@ import {
   deleteVagaPorCodigoAPI,
   cadastraVagaAPI,
 } from "../../../service/VagaService";
+import { useNavigate } from "react-router-dom";
+import WithAuth from "../../../seguranca/WithAuth";
 
 function CadastroVaga() {
+  let navigate = useNavigate();
   const [alerta, setAlerta] = useState({ status: "", message: "" });
   const [listaObjetos, setListaObjetos] = useState([]);
   const [editar, setEditar] = useState(false);
@@ -48,15 +51,19 @@ function CadastroVaga() {
   const novoObjeto = () => {
     setEditar(false);
     setAlerta({ status: "", message: "" });
-    setObjeto({numero_vaga: "", ocupada: 0 });
+    setObjeto({ numero_vaga: "", ocupada: 0 });
     setExibirForm(true);
   };
 
   const editarObjeto = async (id) => {
-    setObjeto(await getVagaPorCodigoAPI(id));
-    setEditar(true);
-    setAlerta({ status: "", message: "" });
-    setExibirForm(true);
+    try {
+      setObjeto(await getVagaPorCodigoAPI(id));
+      setEditar(true);
+      setAlerta({ status: "", message: "" });
+      setExibirForm(true);
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const acaoCadastrarVaga = async (e) => {
@@ -70,6 +77,7 @@ function CadastroVaga() {
         setEditar(true);
       }
     } catch (e) {
+      navigate("/login", { replace: true });
       console.log(e);
     }
 
@@ -84,19 +92,28 @@ function CadastroVaga() {
   };
 
   const recuperaVaga = async () => {
-    setListaObjetos(await getVagaAPI());
+    try {
+      setListaObjetos(await getVagaAPI());
+    } catch (err) {
+      navigate("/login", { replace: true });
+    }
   };
 
   const remover = async (id) => {
-    if (window.confirm("Deseja remover esta Vaga?")) {
-      let retornoAPI = await deleteVagaPorCodigoAPI(id);
-      setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
-      recuperaVaga();
+    try {
+      if (window.confirm("Deseja remover esta Vaga?")) {
+        let retornoAPI = await deleteVagaPorCodigoAPI(id);
+        setAlerta({ status: retornoAPI.status, message: retornoAPI.message });
+        recuperaVaga();
+      }
+    } catch (err) {
+      navigate("/login", { replace: true });
     }
   };
 
   useEffect(() => {
     recuperaVaga();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -138,4 +155,4 @@ function CadastroVaga() {
   );
 }
 
-export default CadastroVaga;
+export default WithAuth(CadastroVaga);
